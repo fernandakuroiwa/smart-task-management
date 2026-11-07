@@ -1,5 +1,5 @@
 
-import type { Task } from "../types/task";
+import type { Task, TaskInput } from "../types/task";
 import { useState } from "react";
 import TaskEditForm from "./TaskEditForm";
 
@@ -19,7 +19,7 @@ interface TaskListProps {
   onDeleteTask: (taskId: number) => void;
   onEditTask: (
     taskId: number,
-    updatedData: Omit<Task, "id" | "status">
+    updatedData: TaskInput
   ) => void;
 }
 

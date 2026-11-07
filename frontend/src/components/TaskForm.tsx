@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { Task } from "../types/task";
+import type { Task, TaskInput } from "../types/task";
 
 interface TaskFormProps {
-  onAddTask: (taskData: Omit<Task, "id" | "status">) => void;
+  onAddTask: (taskData: TaskInput) => void;
 }
 
 function TaskForm({ onAddTask }: TaskFormProps) {
@@ -29,7 +29,7 @@ function TaskForm({ onAddTask }: TaskFormProps) {
 
 
 return (
-  <section className="task-form-section">
+  <section id="task-form" className="task-form-section">
     <h2>Create New Task</h2>
 
     <form onSubmit={handleSubmit}>

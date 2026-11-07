@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { Task } from "../types/task";
+import type { Task, TaskInput } from "../types/task";
 
 interface TaskEditFormProps {
   task: Task;
   onSave: (
     taskId: number,
-    updatedData: Omit<Task, "id" | "status">
+    updatedData: TaskInput
   ) => Promise<void>;
   onCancel: () => void;
 }

@@ -8,3 +8,8 @@ export interface Task {
   created_at: string;
   updated_at: string;
 }
+
+export type TaskInput = Omit<
+  Task,
+  "id" | "status" | "created_at" | "updated_at"
+>;

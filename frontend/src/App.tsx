@@ -11,7 +11,7 @@ import {
   updateTaskStatus,
 } from "./services/taskService";
 import TaskList from "./components/TaskList";
-import type { Task } from "./types/task";
+import type { Task, TaskInput } from "./types/task";
 import TaskForm from "./components/TaskForm";
 import './App.css'
 
@@ -22,6 +22,19 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [priorityFilter, setPriorityFilter] = useState("All");
+
+  function handleNewTaskClick() {
+    const form = document.getElementById("task-form");
+
+    form?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    document.getElementById("title")?.focus({
+      preventScroll: true,
+    });
+  }
 
   const totalTasks = taskList.length;
 
@@ -51,9 +64,7 @@ function App() {
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
-  async function addTask(
-    taskData: Omit<Task, "id" | "status">
-  ) {
+  async function addTask(taskData: TaskInput) {
     try {
       const newTask = await createTask(taskData);
 
@@ -103,7 +114,7 @@ function App() {
 
   async function updateTask(
     taskId: number,
-    updatedData: Omit<Task, "id" | "status">
+    updatedData: TaskInput
   ) {
     try {
       const updatedTask = await updateTaskAPI(taskId, updatedData);
@@ -140,31 +151,40 @@ function App() {
         <Header
           title="Dashboard"
           subtitle="Here's an overview of your productivity"
+          onNewTaskClick={handleNewTaskClick}
         />
-        
+      
         <div className="summary-grid">
           <TaskSummary
             title="Total Tasks"
             value={totalTasks}
             description="All tasks"
+            onClick={() => setStatusFilter("All")}
+            isActive={statusFilter === "All"}
           />
 
           <TaskSummary
             title="Pending"
             value={pendingTasks}
             description="Tasks waiting to be started"
+            onClick={() => setStatusFilter("Pending")}
+            isActive={statusFilter === "Pending"}
           />
 
           <TaskSummary
             title="In Progress"
             value={inProgressTasks}
             description="Tasks currently underway"
+            onClick={() => setStatusFilter("In Progress")}
+            isActive={statusFilter === "In Progress"}
           />
 
           <TaskSummary
             title="Completed"
             value={completedTasks}
             description="Finished tasks"
+            onClick={() => setStatusFilter("Completed")}
+            isActive={statusFilter === "Completed"}
           />
         </div>
 

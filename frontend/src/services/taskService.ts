@@ -1,4 +1,4 @@
-import type { Task } from "../types/task";
+import type { Task, TaskInput } from "../types/task";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -13,7 +13,7 @@ export async function getTasks(): Promise<Task[]> {
 }
 
 export async function createTask(
-  taskData: Omit<Task, "id" | "status">
+  taskData: TaskInput
 ): Promise<Task> {
   const response = await fetch(`${API_URL}/tasks`, {
     method: "POST",
@@ -32,7 +32,7 @@ export async function createTask(
 
 export async function updateTask(
   taskId: number,
-  updatedData: Omit<Task, "id" | "status">
+  updatedData: TaskInput
 ): Promise<Task> {
   const response = await fetch(`${API_URL}/tasks/${taskId}`, {
     method: "PUT",
