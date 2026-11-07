@@ -1,14 +1,14 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers import tasks
+
 app = FastAPI(
     title="Smart Task Management API",
-    description="API for an intelligent task management system",
+    description="API for managing tasks",
     version="1.0.0"
 )
 
-# Allow requests from our React frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -17,12 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-def root():
-    return {
-        "message": "Welcome to Smart Task Management API!"
-    }
+app.include_router(tasks.router)
 
 
 @app.get("/api/health")
